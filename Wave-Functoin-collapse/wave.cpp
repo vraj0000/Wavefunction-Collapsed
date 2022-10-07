@@ -129,94 +129,95 @@ class World
         while (k<8)
         {
         
-        for(i=0; i<m_NumTile; i++)
-            for(j=0; j<m_NumTile; j++)
-            {
-                switch (Zones[(i*m_NumTile)+j].m_Form[0])
-                {
-                    case(0):
-                        Matrix9f.block(i*3,j*3,3,3) = blank;
-                        break;
-                    case(1):
-                        Matrix9f.block(i*3,j*3,3,3) = up;
-                        break;
-                    case(2):
-                        Matrix9f.block(i*3,j*3,3,3) = down;
-                        break;
-                    case(3):
-                        Matrix9f.block(i*3,j*3,3,3) = left;
-                        break;
-                    case(4):
-                        Matrix9f.block(i*3,j*3,3,3) = right;
-                        break;
-                    default:
-                        break;
-                }
-                //std::cout << "Form " << Zones[(i*m_NumTile)+j].m_Entropy << "\n";
-                
-            }
-        // std::cout << "\n" << Matrix9f << "\n";
-        // std::cout << "------------------------" << "\n";
-        
-            
-        Zones[(SetI*m_NumTile)+Setj].m_done = true;
-        
-        // Change the inpofration arround
-        // Up
-        if(SetI-1 >= 0)
-        {
-            if(!Zones[((SetI-1)*m_NumTile)+Setj].m_Collapsed)
-            {
-                Zones[((SetI-1)*m_NumTile)+Setj].m_Form = intersection(Zones[((SetI-1)*m_NumTile)+Setj].m_Form,
-                                                            DirectionTile[Zones[(SetI*m_NumTile)+Setj].m_Form[0]][Up-1]);
-                Zones[((SetI-1)*m_NumTile)+Setj].m_Entropy = Zones[((SetI-1)*m_NumTile)+Setj].m_Form .size();
-                // std::cout << "UP" << Zones[((SetI-1)*m_NumTile)+Setj].m_Entropy<< "\n";
-            
-            }
+          for(i=0; i<m_NumTile; i++)
+              for(j=0; j<m_NumTile; j++)
+              {
+                  switch (Zones[(i*m_NumTile)+j].m_Form[0])
+                  {
+                      case(0):
+                          Matrix9f.block(i*3,j*3,3,3) = blank;
+                          break;
+                      case(1):
+                          Matrix9f.block(i*3,j*3,3,3) = up;
+                          break;
+                      case(2):
+                          Matrix9f.block(i*3,j*3,3,3) = down;
+                          break;
+                      case(3):
+                          Matrix9f.block(i*3,j*3,3,3) = left;
+                          break;
+                      case(4):
+                          Matrix9f.block(i*3,j*3,3,3) = right;
+                          break;
+                      default:
+                          break;
+                  }
+                  //std::cout << "Form " << Zones[(i*m_NumTile)+j].m_Entropy << "\n";
 
+              }
+          // std::cout << "\n" << Matrix9f << "\n";
+          // std::cout << "------------------------" << "\n";
+
+
+          Zones[(SetI*m_NumTile)+Setj].m_done = true;
+
+          // Change the inpofration arround
+          // Up
+          if(SetI-1 >= 0)
+          {
+              if(!Zones[((SetI-1)*m_NumTile)+Setj].m_Collapsed)
+              {
+                  Zones[((SetI-1)*m_NumTile)+Setj].m_Form = intersection(Zones[((SetI-1)*m_NumTile)+Setj].m_Form,
+                                                              DirectionTile[Zones[(SetI*m_NumTile)+Setj].m_Form[0]][Up-1]);
+                  Zones[((SetI-1)*m_NumTile)+Setj].m_Entropy = Zones[((SetI-1)*m_NumTile)+Setj].m_Form .size();
+                  // std::cout << "UP" << Zones[((SetI-1)*m_NumTile)+Setj].m_Entropy<< "\n";
+
+              }
+
+
+          }
+          // // Down
+          if(SetI+1 < m_NumTile)
+          {
+              if(!Zones[((SetI+1)*m_NumTile)+Setj].m_Collapsed)
+              {
+                  Zones[((SetI+1)*m_NumTile)+Setj].m_Form = intersection(Zones[((SetI+1)*m_NumTile)+Setj].m_Form,
+                                                              DirectionTile[Zones[(SetI*m_NumTile)+Setj].m_Form[0]][Down-1]);
+                  Zones[((SetI+1)*m_NumTile)+Setj].m_Entropy = Zones[((SetI+1)*m_NumTile)+Setj].m_Form.size();
+                  // std::cout << "Down" << Zones[((SetI+1)*m_NumTile)+Setj].m_Entropy<< "\n";
+
+              }
+
+
+          }
+          // Left
+          if(Setj-1 >= 0)
+          {
+              if(!Zones[((SetI)*m_NumTile)+(Setj-1)].m_Collapsed)
+              {
+                  Zones[((SetI)*m_NumTile)+(Setj-1)].m_Form = intersection(Zones[((SetI)*m_NumTile)+(Setj-1)].m_Form,
+                                                              DirectionTile[Zones[(SetI*m_NumTile)+Setj].m_Form[0]][Left-1]);
+                  Zones[((SetI)*m_NumTile)+(Setj-1)].m_Entropy = Zones[((SetI)*m_NumTile)+(Setj-1)].m_Form.size();
+                  // std::cout << "Left" << Zones[((SetI)*m_NumTile)+(Setj-1)].m_Entropy<< "\n";
+
+              }
+
+          }
+
+          // Right
+          if(Setj+1 < m_NumTile)
+          {
+              if(!Zones[((SetI)*m_NumTile)+(Setj+1)].m_Collapsed)
+              {
+                  Zones[((SetI)*m_NumTile)+(Setj+1)].m_Form = intersection(Zones[((SetI)*m_NumTile)+(Setj+1)].m_Form,
+                                                              DirectionTile[Zones[(SetI*m_NumTile)+Setj].m_Form[0]][Right-1]);
+                  Zones[((SetI)*m_NumTile)+(Setj+1)].m_Entropy = Zones[((SetI)*m_NumTile)+(Setj+1)].m_Form.size();
+                  // std::cout << "Right" << Zones[((SetI)*m_NumTile)+(Setj+1)].m_Entropy<< "\n";
+
+              }
 
         }
-        // // Down
-        if(SetI+1 < m_NumTile)
-        {
-            if(!Zones[((SetI+1)*m_NumTile)+Setj].m_Collapsed)
-            {
-                Zones[((SetI+1)*m_NumTile)+Setj].m_Form = intersection(Zones[((SetI+1)*m_NumTile)+Setj].m_Form,
-                                                            DirectionTile[Zones[(SetI*m_NumTile)+Setj].m_Form[0]][Down-1]);
-                Zones[((SetI+1)*m_NumTile)+Setj].m_Entropy = Zones[((SetI+1)*m_NumTile)+Setj].m_Form.size();
-                // std::cout << "Down" << Zones[((SetI+1)*m_NumTile)+Setj].m_Entropy<< "\n";
-            
-            }
-
-
-        }
-        // Left
-        if(Setj-1 >= 0)
-        {
-            if(!Zones[((SetI)*m_NumTile)+(Setj-1)].m_Collapsed)
-            {
-                Zones[((SetI)*m_NumTile)+(Setj-1)].m_Form = intersection(Zones[((SetI)*m_NumTile)+(Setj-1)].m_Form,
-                                                            DirectionTile[Zones[(SetI*m_NumTile)+Setj].m_Form[0]][Left-1]);
-                Zones[((SetI)*m_NumTile)+(Setj-1)].m_Entropy = Zones[((SetI)*m_NumTile)+(Setj-1)].m_Form.size();
-                // std::cout << "Left" << Zones[((SetI)*m_NumTile)+(Setj-1)].m_Entropy<< "\n";
-
-            }
-
-        }
-
-        // Right
-        if(Setj+1 < m_NumTile)
-        {
-            if(!Zones[((SetI)*m_NumTile)+(Setj+1)].m_Collapsed)
-            {
-                Zones[((SetI)*m_NumTile)+(Setj+1)].m_Form = intersection(Zones[((SetI)*m_NumTile)+(Setj+1)].m_Form,
-                                                            DirectionTile[Zones[(SetI*m_NumTile)+Setj].m_Form[0]][Right-1]);
-                Zones[((SetI)*m_NumTile)+(Setj+1)].m_Entropy = Zones[((SetI)*m_NumTile)+(Setj+1)].m_Form.size();
-                // std::cout << "Right" << Zones[((SetI)*m_NumTile)+(Setj+1)].m_Entropy<< "\n";
-
-            }
-
-        }
+          
         MaxEntropy2 =10;
         for(i=0; i<m_NumTile; i++)
             for(j=0; j<m_NumTile; j++)
